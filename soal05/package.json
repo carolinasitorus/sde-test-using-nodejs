@@ -1,0 +1,14 @@
+{
+  "name": "soal05",
+  "version": "1.0.0",
+  "description": "sort month",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sort"
+  ],
+  "author": "Carolina",
+  "license": "ISC"
+}

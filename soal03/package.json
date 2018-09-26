@@ -1,0 +1,15 @@
+{
+  "name": "soal03",
+  "version": "1.0.0",
+  "description": "merge 2 sorted array",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sort",
+    "nodejs"
+  ],
+  "author": "Carolina",
+  "license": "ISC"
+}

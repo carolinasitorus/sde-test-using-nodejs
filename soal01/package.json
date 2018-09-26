@@ -1,0 +1,14 @@
+{
+  "name": "soal01",
+  "version": "1.0.0",
+  "description": "swap 2 integer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "swap"
+  ],
+  "author": "Carolina",
+  "license": "ISC"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "soal02",
+  "version": "1.0.0",
+  "description": "koneksi dengan sql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sql"
+  ],
+  "author": "Carolina",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
+}
