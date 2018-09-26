@@ -1,0 +1,41 @@
+Ada 25 kuda dengan berkecapatan berbeda, anda hanya bisa melihat perbedaan kecepatan
+kuda dengan mengadakan balapan kuda dan hanya bisa mengikut sertakan 5 kuda dalam 1
+balapan. Anda tidak punya penghitung waktu, tapi anda bisa mengetahui dari mata Anda
+dalam 1 balapan siapa yang juara 1 sampai 5. Berapa banyak balapan yang anda harus
+gelarkan untuk mencari 3 kuda tercepat?
+
+Jawaban:
+Pertandingan sesi pertama:
+balapan 1:
+- ABCDE
+balapan 2:
+- FGHIJ
+balapan 3:
+- KLMNO
+balapan 4:
+- PQRST
+balapan 5:
+- UVWXY
+untuk setiap balapan diatas:
+Diperoleh 3 kandidat tercepat untuk masing-masing balapan yaitu;
+- ABC
+- FGH
+- KLM
+- PQR
+- UVM
+
+Pertandingan sesi kedua:
+balapan ke 6: (Lomba balapan diikuti oleh kandidat tercepat dari masing-masing balapan) yaitu:
+- AFKPU 
+diperoleh 3 kandidat tercepat:
+- AFK
+(kesimpulan : PQR dan UVM gugur dan A adalah kuda tercepat)
+
+Pertandingan sesi ketiga:
+dari balapan ke 6 dapat disimpulkan bahwa:
+- Kuda tercepat pada posisi pertama adalah A.
+- karena posisi K pada posisi ke tiga maka H, dan LM gugur.
+balapan ke 7: (balapan dilakukan untuk memperoleh kandidat tercepat diposisi kedua dan ketiga)
+- BCFGK
+
+Jumlah balapan yang harus digelar untuk mencari 3 kuda tercepat adalah sebanyak 7 balapan.
