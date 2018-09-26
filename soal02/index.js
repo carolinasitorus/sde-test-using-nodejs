@@ -1,119 +1,112 @@
-// var mysql = require('mysql');
-// var http = require('http');
 
-// var con = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database:"sinotif_public"
-// });
-
-// con.connect(function(err) {
-//     if(!err) {
-//         http.createServer(function (req, res) {
-//         res.writeHead(200, {'Content-Type': 'text/plain'});
-//         res.end('Koneksi berhasil');
-//     }).listen(1234, "127.0.0.1");
-//     console.log('Server running at http://127.0.0.1:1234/');
-//     }else{
-//     console.log("Error connecting database");
-//     }
-// });
-
-//app.js
-// var mysql = require('mysql');
-
-/**
-* Setting opsi dari connection, 
-* lihat https://github.com/felixge/node-mysql/
-*/
-// var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'root'
-// });
-
-// //Membuka koneksi ke database MySQL
-// connection.connect(function(err){
-//     if(err) {
-//         console.log(err);
-//     } else {
-//         console.log('Koneksi dengan id '+ connection.threadId);
-//     }
-// });
-
-// // Query bisa dilakukan di sini
-// var create_db = 'CREATE DATABASE IF NOT EXISTS sde_test';
-// connection.query(create_db, function(err, result){
-//     if(err){
-//       console.log(err);
-//     } else {
-//       console.log(result);
-//     }
-// });
 var mysql = require('mysql');
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root"
-});
+function createConnection() {
+    var connection = mysql.createConnection({
+       host: "localhost",
+       user: "root",
+       password: "root"
+    });
+    return connection;
+}
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query("CREATE DATABASE IF NOT EXISTS sde_test", function (err, result) {
+function closeConnection(connection) {
+    connection.end(function(err){
+        if(err) {
+            console.log(err);
+        } else {
+            console.log('koneksi ditutup!');
+        }
+    });
+}
+
+function createDatabase(){
+    var connection = createConnection();
+    connection.connect(function(err) {
+        if (err) throw err;
+            console.log("Connected!");
+        connection.query("CREATE DATABASE IF NOT EXISTS sde_test_db", function (err, result) {
+        if (err) throw err;
+        console.log("Database created");
+        });
+    });
+}
+
+function useDatabase(){
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "sde_test_db"
+    });
+    return connection;
+}  
+
+function dropTable(connection){
+    var sql = "DROP TABLE IF EXISTS user";
+    connection.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("Database created");
-  });
-});
+    });
+} 
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "sde_test"
-});
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql = "CREATE TABLE users (nama VARCHAR(255), kelamin VARCHAR(10), umur INT)";
-  con.query(sql, function (err, result) {
+function createTable(connection){
+    var sql = "CREATE TABLE IF NOT EXISTS user (nama VARCHAR(255), kelamin VARCHAR(10), umur INT)";
+    connection.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("Table created");
-  });
+    });
+}
 
-  var sql = "INSERT INTO users (nama, kelamin, umur) VALUES ('Carolina', 'Wanita', '19')";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("1 record inserted");
-  });
+function insertData(connection){
+    var sql1 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 01', 'Wanita', '40')";
+    var sql2 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 02', 'Wanita', '32')";
+    var sql3 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 03', 'Wanita', '35')";
+    var sql4 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 01', 'Pria', '40')";
+    var sql5 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 02', 'Pria', '32')";
+    var sql6 = "INSERT INTO user (nama, kelamin, umur) VALUES ('Nama 03', 'Pria', '35')";
+    var sqlParam = [sql1, sql2, sql3, sql4, sql5, sql6];
+    for (var i = 0; i< sqlParam.length; i++){
+        connection.query(sqlParam[i], function (err, result) {
+            if (err) throw err;
+        });
+    }
+}
 
-  con.query("SELECT * FROM customers", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
+function selectData(connection){
+    connection.query("SELECT * FROM user", function (err, result, fields) {
+        if (err) throw err;
+        console.log("Semua user:")
+        console.log(result);
+    });
+}
 
-});
+function selectDataByCriteria(connection){
+    connection.query("SELECT * FROM user where kelamin = 'Pria' and umur > 35", function (err, result, fields) {
+        if (err) throw err;
+        console.log("User berkelamin pria berumur > 35:")
+        console.log(result);
+    });
+}
 
-// var ebook = {
-//     id: 1,
-//     title: 'Wiro Sableng Pendekar Kapak Maut Naga Geni 212 : Batu Tujuh Warna',
-//     pengarang: 'Bastian Tito'
-// };
+function selectCountDataByCriteria(connection){
+    connection.query("SELECT count(*) as cnt FROM user where kelamin = 'Pria' and umur > 35", function (err, result, fields) {
+        if (err) throw err;
+        console.log("Jumlah user berkelamin pria berumur > 35 adalah " + result[0].cnt + ' orang')
+    });
+}
 
-// var insert_sql = 'INSERT INTO ebook SET ?';
 
-// connection.query(insert_sql, ebook, function(err, result){
-//     err ? console.log(err): console.log(result);
-// });
 
-//Menutup koneksi
-// connection.end(function(err){
-//    if(err) {
-//        console.log(err);
-//     } else {
-//        console.log('koneksi ditutup!');
-//    }
-// });
+function main(){
+    var connection = useDatabase();
+    connection.connect(function(err) {
+        if (err) throw err;
+        dropTable(connection);
+        createTable(connection);
+        insertData(connection);
+        selectData(connection);
+        selectDataByCriteria(connection);
+        selectCountDataByCriteria(connection);
+    });
+}
+
+main();
