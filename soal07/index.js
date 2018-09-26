@@ -1,8 +1,3 @@
-/*
-urutkan data:
-invoice_id, sku_no, total_price
-total price = (base price - discon +tax + shipping cose) * qty
-*/
 const fs = require('fs'); 
 const csv = require('csv-parser');
 const stringify = require('csv-stringify');
@@ -39,11 +34,9 @@ fs.createReadStream("Test Software Development Engineer - Invoice Data.csv")
         invoiceData.push(new Invoice(invoiceId, skuNo, totalPrice));
     }
     catch(err) {
-        //error handler
     }
 })
 .on('end',function(){
-    //some final operation
     let data = [];
     let columns = {
 	  invoice_id: 'invoice_id',
