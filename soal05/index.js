@@ -15,7 +15,7 @@ function swap(arr, first_Index, second_Index){
     return arr;
 }
 
-var arrayParam = ['desember', 'februari', 'januari', 'maret', 'juni'];
+var arrayParam = ['Februari', 'Agustus', 'April', 'Maret'];
 var paramOrders = [];
 var sortedParam = [];
 var temp = temp;
