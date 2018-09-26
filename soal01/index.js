@@ -2,7 +2,11 @@ function swap(a, b) {
 	var temp = a;
 	a = b;
 	b = temp;
-	return [a,b]
+	var result = {
+		a: a,
+		b: b
+	};
+	return result;
 }
 
 console.log(swap(3,7));
