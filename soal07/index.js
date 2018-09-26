@@ -15,28 +15,27 @@ var Invoice = function (_invoiceId, _skuNo, _totalPrice) {
 
 var invoiceData = [];
 
+function sortByCol(arr, colIndex){
+    arr.sort(sortFunction)
+    function sortFunction(a, b) {
+        a = a[colIndex]
+        b = b[colIndex]
+        return (a === b) ? 0 : (a < b) ? -1 : 1
+    }
+}
 
 fs.createReadStream("Test Software Development Engineer - Invoice Data.csv")
 .pipe(csv())
 .on('data', function(data){
     try {
         invoiceId = data.invoices_id;
-        console.log("Invoice Id" + invoiceId);
         skuNo = data.sku_no;
-        console.log("sku no" + data.sku_no);
         basePrice = parseInt(data.base_price);
         discount = parseInt(data.discount);
         tax = parseInt(data.tax);
         shippingCost = parseInt(data.shipping_cost);
         qty = data.qty;
         totalPrice = ((basePrice - discount) + tax + shippingCost) * qty; 
-        console.log((basePrice-discount)+tax+shippingCost);
-        console.log("base price" + data.base_price);
-        console.log("discount" + data.discount);
-        console.log("tx" + data.tax);
-        console.log("ship"  + data.shipping_cost);
-        console.log("qty" + data.qty);
-        console.log(totalPrice);
         invoiceData.push(new Invoice(invoiceId, skuNo, totalPrice));
     }
     catch(err) {
@@ -45,8 +44,6 @@ fs.createReadStream("Test Software Development Engineer - Invoice Data.csv")
 })
 .on('end',function(){
     //some final operation
-    console.log("Invoice" + invoiceData);
-
     let data = [];
     let columns = {
 	  invoice_id: 'invoice_id',
@@ -56,6 +53,7 @@ fs.createReadStream("Test Software Development Engineer - Invoice Data.csv")
 	invoiceData.forEach(function(invoice){
          data.push([invoice.invoiceId, invoice.skuNo, invoice.totalPrice]);
 	});
+    sortByCol(data, 1);
 	stringify(data, { header: true, columns: columns }, (err, output) => {
 	  if (err) throw err;
 	  fs.writeFile('report_sku.csv', output, (err) => {
