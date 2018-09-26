@@ -1,0 +1,15 @@
+{
+  "name": "soal07",
+  "version": "1.0.0",
+  "description": "read data from file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carolina",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^2.0.0",
+    "csv-stringify": "^4.0.1"
+  }
+}
